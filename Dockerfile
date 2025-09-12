@@ -22,4 +22,5 @@ EXPOSE 5000
 
 # Start the Flask application using Gunicorn
 # Adjust the command according to your app's entry point
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]  # Assuming your Flask app instance is named 'app' in run.py and listens on port 5000 and runs with gunicorn server
+# Assuming your Flask app instance is named 'app' in run.py and listens on port 5000 and runs with gunicorn server
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]  
