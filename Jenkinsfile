@@ -32,7 +32,7 @@ pipeline {
                 sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-        Optional: Push to Docker Hub (requires credentials setup in Jenkins)
+        //Optional: Push to Docker Hub (requires credentials setup in Jenkins)
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([ credentialsId: 'dockerhub-credentials', url: 'https://index.docker.io/v1/' ]) {
