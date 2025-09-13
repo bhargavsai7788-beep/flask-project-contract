@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile true
+    }
 
     environment {
         IMAGE_NAME = "contract-life-cycle-flask-app"
@@ -7,15 +9,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Docker') {
-            steps {
-                sh '''
-                    sudo apt-get update
-                    sudo apt-get install -y docker-ce-cli
-                '''
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 script {
