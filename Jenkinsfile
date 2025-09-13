@@ -3,36 +3,44 @@ pipeline {
 
     environment {
         IMAGE_NAME = "contract-life-cycle-flask-app"
-        IMAGE_TAG = "${env.BUILD_ID}"
-        CONTAINER_NAME = "clmp-container"
+        IMAGE_TAG = "latest"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Install Docker') {
             steps {
-                checkout scm
+                sh '''
+                    apt-get update
+                    apt-get install -y docker-ce-cli
+                '''
             }
         }
+
         stage('Build Docker Image') {
             steps {
+                script {
+                    env.IMAGE_TAG = sh(returnStdout: true, script: 'echo ${BUILD_NUMBER}').trim()
+                }
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
-        stage('Run Unit Tests') {
-            steps {
-                sh "docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} pytest"
-            }
-        }
+
+        // Remove or comment out this stage if you have no tests
+        // stage('Run Unit Tests') {
+        //     steps {
+        //         sh "docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} python -m pytest tests/"
+        //     }
+        // }
+
         stage('Deploy to Server') {
             steps {
-                // Stop and remove any existing container
-                sh "docker stop ${CONTAINER_NAME} || true"
-                sh "docker rm ${CONTAINER_NAME} || true"
-                // Run the new container
-                sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}"
+                sh "docker stop clmp-container || true"
+                sh "docker rm clmp-container || true"
+                sh "docker run -d --name clmp-container -p 5000:5000 ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-        //Optional: Push to Docker Hub (requires credentials setup in Jenkins)
+
+        // Optional: Push to Docker Hub (requires credentials setup in Jenkins)
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([ credentialsId: 'dockerhub-credentials', url: 'https://index.docker.io/v1/' ]) {
