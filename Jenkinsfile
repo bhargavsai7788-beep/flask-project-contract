@@ -1,6 +1,8 @@
 pipeline {
     agent {
-        dockerfile true
+        docker {
+            image 'docker:latest'
+        }
     }
 
     environment {
