@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:latest'
-        }
-    }
+    agent any
 
     environment {
         IMAGE_NAME = "contract-life-cycle-flask-app"
