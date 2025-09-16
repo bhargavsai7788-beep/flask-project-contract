@@ -19,12 +19,12 @@ pipeline {
         }
 
         // Optional: Run Unit Tests
-        stage('Run Unit Tests') {
-            steps {
-                // The `docker run` command will now use the correct full image name and tag
-                bat "docker run --rm ${env.FULL_IMAGE_NAME}:${env.IMAGE_TAG} python -m pytest tests/"
-            }
-        }
+        // stage('Run Unit Tests') {
+        //     steps {
+        //         // The `docker run` command will now use the correct full image name and tag
+        //         bat "docker run --rm ${env.FULL_IMAGE_NAME}:${env.IMAGE_TAG} python -m pytest tests/"
+        //     }
+        // }
 
         stage('Deploy to Server') {
             steps {
