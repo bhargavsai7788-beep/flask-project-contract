@@ -3,8 +3,9 @@ pipeline {
 
     environment {
         // We define a default here, but it will be overwritten by the build number
+        DOCKER_USER = 'bhargav1518'
         IMAGE_NAME = "contract-life-cycle-flask-app"
-        IMAGE_TAG = "latest"
+        IMAGE_TAG = "${env.BUILD_NUMBER}" 
     }
 
     stages {
