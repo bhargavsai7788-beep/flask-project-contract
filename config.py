@@ -11,3 +11,8 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     # More robust logging, etc.
+
+# lorem 23ipsum 45 
+# dolor sit amet, consectetur adipiscing elit
+# lorem ipsum 34
+# Sed do eiusmod tempor incididunt ut labore et dolore  
